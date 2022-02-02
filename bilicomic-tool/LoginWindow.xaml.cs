@@ -78,7 +78,7 @@ namespace bilicomic_tool
                 {
                     _url = obj["data"]["url"].ToString();
                     _oauthKey = obj["data"]["oauthKey"].ToString();
-                    QrImg.Source = new BitmapImage(new Uri("http://qr.topscan.com/api.php?text=" + Uri.EscapeDataString(_url)));
+                    QrImg.Source = new BitmapImage(new Uri("https://api.amarea.cn/QRCode/generate.php?text=" + Uri.EscapeDataString(_url)));
                     timer = new DispatcherTimer();
                     timer.Interval = TimeSpan.FromSeconds(3);
                     timer.Tick += Timer_Tick;
