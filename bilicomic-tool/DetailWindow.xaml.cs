@@ -284,7 +284,7 @@ namespace bilicomic_tool
         public int is_finish { get; set; }
         public int status { get; set; }
         public int fav { get; set; }
-        public int read_order { get; set; }
+        public string read_order { get; set; }
         public string evaluate { get; set; }
         public int total { get; set; }
         public List<EpList> ep_list { get; set; }
