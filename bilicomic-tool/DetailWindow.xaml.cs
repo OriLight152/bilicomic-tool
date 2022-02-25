@@ -144,7 +144,7 @@ namespace bilicomic_tool
         {
             IDictionary<string, string> header = new Dictionary<string, string>();
             header.Add("cookie", ApiHelper.user.cookie);
-            var data = await HttpHelper.Post("https://manga.bilibili.com/twirp/user.v1.User/GetWallet?device=pc&platform=web", "{}", header);
+            var data = await HttpHelper.Post("https://manga.bilibili.com/twirp/user.v1.User/GetInitInfo?device=pc&platform=web", "{}", header);
             if (!data.status)
             {
                 MessageBox.Show(data.message);
@@ -153,7 +153,7 @@ namespace bilicomic_tool
             var obj = data.GetJObject();
             if (obj["code"].ToInt32() == 0)
             {
-                return obj["data"]["remain_coupon"].ToInt32();
+                return obj["data"]["coupon"]["remain_coupon"].ToInt32() + obj["data"]["coupon"]["remain_silver"].ToInt32();
             }
             else
             {

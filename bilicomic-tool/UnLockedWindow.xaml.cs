@@ -87,17 +87,25 @@ namespace bilicomic_tool
             }
 
         }
-        private async Task<CanPay> EpisodeBuyInfo(int epid,string coupon_id)
+        private async Task<CanPay> EpisodeBuyInfo(int epid,string coupon_id,int ep_silver=1)
         {
             IDictionary<string, string> header = new Dictionary<string, string>();
             header.Add("cookie", ApiHelper.user.cookie);
-            var data = await HttpHelper.Post("https://manga.bilibili.com/twirp/comic.v1.Comic/BuyEpisode?device=pc&platform=web", JsonConvert.SerializeObject(new
+            int buy_method = 2;
+            int pay_amount = 1;
+            if (ckSilver.IsChecked.Value)
             {
-                buy_method=2,
-                coupon_id= coupon_id,
-                ep_id = epid,
-                auto_pay_gold_status=2
-            }), header);
+                buy_method = 5;
+            }
+                var data = await HttpHelper.Post("https://manga.bilibili.com/twirp/comic.v1.Comic/BuyEpisode?device=pc&platform=web", JsonConvert.SerializeObject(new
+                {
+                    buy_method = buy_method,
+                    coupon_id = coupon_id,
+                    ep_id = epid,
+                    auto_pay_gold_status = 2,
+                    pay_amount = pay_amount
+                }), header);
+            
             if (!data.status)
             {
                 return new CanPay()

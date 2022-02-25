@@ -40,6 +40,7 @@
         <Grid Grid.Row="2">
             <TextBlock VerticalAlignment="Center" Visibility="Collapsed" Margin="12 0" HorizontalAlignment="Left">进度:<Run x:Name="progress" Text="0/0"/></TextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <CheckBox x:Name="ckSilver" VerticalAlignment="Center">使用通用券</CheckBox>
                 <Button Margin="12" x:Name="btnStart" Click="btnStart_Click" Padding="16 8" HorizontalAlignment="Right"  VerticalAlignment="Center" Background="#E91E63" BorderBrush="#E91E63" Foreground="White">开始解锁</Button>
             </StackPanel>
         </Grid>
