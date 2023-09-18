@@ -52,7 +52,7 @@ namespace bilicomic_tool
             txtStatus.Text = "正在下载";
             var mode = GetEpubMode();
             var cover = CoverFile.IsChecked.Value;
-            var q=GetQuality();
+            var q = GetQuality();
             List<Task> tasks = new List<Task>();
             var threadNum = ThreadNum.Value;
             //开始下载
@@ -72,27 +72,28 @@ namespace bilicomic_tool
             {
                 txtStatus.Text = "正在打包EPUB";
                 List<ImageItem> imgs = new List<ImageItem>();
-                var ls = EpLists.Where(x => x.log == "已下载").OrderBy(x=>x.ord);
+                var ls = EpLists.Where(x => x.log == "已下载").OrderBy(x => x.ord);
                 foreach (var item in ls)
                 {
-                    var dir =new DirectoryInfo(System.IO.Path.Combine(file, (item.short_title + " " + item.title).Trim()));
+                    var dir = new DirectoryInfo(System.IO.Path.Combine(file, (item.short_title + " " + item.title).Trim()));
                     foreach (var dirFile in dir.GetFiles("*.jpg"))
                     {
-                        imgs.Add(new ImageItem() { 
-                            ComicID=detail.id,
-                            ChapterID=item.id,
-                            Name= dirFile.Name,
-                            Path= dirFile.FullName
+                        imgs.Add(new ImageItem()
+                        {
+                            ComicID = detail.id,
+                            ChapterID = item.id,
+                            Name = dirFile.Name,
+                            Path = dirFile.FullName
                         });
                     }
                 }
                 var fileTilte = $"{detail.title}-{ls.FirstOrDefault().short_title}-{ls.LastOrDefault().short_title}";
-                EpubHelper epubHelper = new EpubHelper(System.IO.Path.Combine(txtPath.Text, fileTilte+".epub"));
+                EpubHelper epubHelper = new EpubHelper(System.IO.Path.Combine(txtPath.Text, fileTilte + ".epub"));
                 var id = Guid.NewGuid().ToString();
                 bool result = false;
                 await Task.Run(() =>
                 {
-                   result= epubHelper.CreateEpubFile(id, fileTilte, detail.author, imgs);
+                    result = epubHelper.CreateEpubFile(id, fileTilte, detail.author, imgs);
                 });
                 if (result)
                 {
@@ -109,7 +110,7 @@ namespace bilicomic_tool
             if (mode == 2)
             {
                 txtStatus.Text = "正在打包EPUB";
-               
+
                 var ls = EpLists.Where(x => x.log == "已下载").OrderBy(x => x.ord);
                 foreach (var item in ls)
                 {
@@ -131,9 +132,13 @@ namespace bilicomic_tool
                     bool result = false;
                     await Task.Run(() =>
                     {
-                        result = epubHelper.CreateEpubFile(detail.id+item.id.ToString(), fileTilte, detail.author, imgs);
+                        result = epubHelper.CreateEpubFile(detail.id + item.id.ToString(), fileTilte, detail.author, imgs);
                     });
-                    if (!result)
+                    if (result)
+                    {
+                        item.log = "EPUB创建成功";
+                    }
+                    else
                     {
                         item.log = "EPUB创建失败";
                     }
@@ -145,8 +150,8 @@ namespace bilicomic_tool
             }
 
         }
-      
-        private async Task NewThread(List<EpList> items, string path, bool cover,string q)
+
+        private async Task NewThread(List<EpList> items, string path, bool cover, string q)
         {
             foreach (var item in items)
             {
@@ -158,7 +163,7 @@ namespace bilicomic_tool
                     {
                         item.log = "正在读取";
                     });
-                    var data = await ApiHelper.GetImages(detail.id, item.id,q);
+                    var data = await ApiHelper.GetImages(detail.id, item.id, q);
                     if (data.status)
                     {
                         int i = 1;
@@ -248,8 +253,8 @@ namespace bilicomic_tool
         {
             EpLists.Clear();
         }
-    
-        
-    
+
+
+
     }
 }
