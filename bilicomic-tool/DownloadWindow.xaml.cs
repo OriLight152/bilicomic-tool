@@ -40,7 +40,7 @@ namespace bilicomic_tool
         }
         private async void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            grid.IsEnabled = false;
+            DisableUI();
             DirectoryInfo directoryInfo = new DirectoryInfo(txtPath.Text);
             if (!directoryInfo.Exists)
             {
@@ -65,7 +65,7 @@ namespace bilicomic_tool
             if (mode == 0)
             {
                 txtStatus.Text = "全部下载完成";
-                grid.IsEnabled = true;
+                EnableUI();
                 return;
             }
             if (mode == 1)
@@ -103,7 +103,7 @@ namespace bilicomic_tool
                 {
                     txtStatus.Text = "EPUB创建失败";
                 }
-                grid.IsEnabled = true;
+                EnableUI();
                 return;
             }
 
@@ -145,7 +145,7 @@ namespace bilicomic_tool
                 }
 
                 txtStatus.Text = "全部下载完成";
-                grid.IsEnabled = true;
+                EnableUI();
                 return;
             }
 
@@ -254,7 +254,17 @@ namespace bilicomic_tool
             EpLists.Clear();
         }
 
+        private void EnableUI()
+        {
+            grid.IsEnabled = true;
+            panel.IsEnabled = true;
+        }
 
+        private void DisableUI()
+        {
+            grid.IsEnabled = false;
+            panel.IsEnabled= false;
+        }
 
     }
 }

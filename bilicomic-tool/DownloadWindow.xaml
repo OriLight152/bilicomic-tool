@@ -9,13 +9,13 @@
         Loaded="Window_Loaded"
         Closing="Window_Closing"
         Title="下载漫画"  Height="750" Width="600">
-    <Grid x:Name="grid">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Margin="8">
+        <StackPanel Margin="8" x:Name="panel">
             <TextBlock>保存路径:</TextBlock>
             <Grid  Margin="0 8 0 0">
                 <Grid.ColumnDefinitions>
@@ -65,7 +65,7 @@
             </ListView.ItemTemplate>
 
         </ListView>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" x:Name="grid">
             <TextBlock x:Name="txtStatus" VerticalAlignment="Center" Margin="12 0" HorizontalAlignment="Left"></TextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Margin="12" x:Name="btnStart" Click="btnStart_Click" Padding="16 8" HorizontalAlignment="Right"  VerticalAlignment="Center" Background="#E91E63" BorderBrush="#E91E63" Foreground="White">开始下载</Button>
